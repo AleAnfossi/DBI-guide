@@ -6,7 +6,8 @@ x<-t(x)     #all these operations on the x were necessary since if not it wouldn
 cl<-as.integer(cl) #obviously the same difficulty even with cl
 y<-cls.scatt.data(x, cl, dist="euclidean")  #passage needed for the function to work
 k<-clv.Davies.Bouldin(y, intracls="average", intercls="centroid")  #eventually intracls=centroid
-View(DBnormalize(t(k[1])))
+DB<-DBnormalize(t(k[1]))
+View(DB)
 }
 
 

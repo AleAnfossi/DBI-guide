@@ -27,7 +27,6 @@ df <- data.frame(x = data[, 1], y = data[, 2],
                  cluster = factor(rep(1:2, each = n1)))
 
 # Apply kmeans to the data
-set.seed(123)
 kmeans_result <- kmeans(df[, 1:2], centers = 2, nstart = 25)
 
 # Add the kmeans cluster results to the dataframe
@@ -41,24 +40,6 @@ ggplot(df, aes(x = x, y = y, color = kmeans_cluster)) +
        x = "Dimension 1",
        y = "Dimension 2")
 
-# Convert the dataset to matrix and adjust types
-x <- as.matrix(df[, 1:2])
-x <- apply(x, 2, as.double)
-x <- t(x)
-
-# Convert cluster assignments to integer
-cl <- as.integer(df$kmeans_cluster)
-
-# Prepare data for Davies-Bouldin index calculation
-y <- cls.scatt.data(t(x), cl, dist="euclidean")
 
 # Calculate Davies-Bouldin index
-db_index1 <- clv.Davies.Bouldin(y, intracls="average", intercls="centroid")
-db_index2 <- clv.Davies.Bouldin(y, intracls="centroid", intercls="centroid")
-db_index3 <- DBnormalize(db_index1)
-db_index4 <- DBnormalize(db_index2)
-
-print(db_index1)
-print(db_index2)
-print(db_index3)
-print(db_index4)
+print(DBI(data,df$kmeans_cluster))
