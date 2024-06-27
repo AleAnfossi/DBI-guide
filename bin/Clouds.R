@@ -35,6 +35,3 @@ ggplot(mydata, aes(x = x, y = y, color = kmeans_cluster)) +
   labs(title = "K-Means Clustering",
        x = "Dimension 1",
        y = "Dimension 2")
-
-#Print the Indexes
-print(indexes)
