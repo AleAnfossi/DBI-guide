@@ -1,8 +1,12 @@
 fix_sets <- function(data, labels) {
   # Remove rows with labels equal to 0
-  valid_indices <- which(dbsc_lab$dbscan_smal != 0)
+  
+  valid_indices <- which(labels != 0)
+  if (length(valid_indices) == 0) {
+    stop("Error: All points are outliers.")
+  }
   filtered_data <- mydata[valid_indices, ]
-  filtered_labels <- dbsc_lab$dbscan_smal[valid_indices]
+  filtered_labels <- labels[valid_indices]
   
   # Check if there is only one unique cluster in the filtered labels
   unique_clusters <- unique(filtered_labels)

@@ -7,13 +7,13 @@ DBI_EHRs<-function(data,km_labels,hc_labels,dbsc_lab )
   hc_comp <- DBI(data, hc_labels$labels_complete)
   hc_sing <- DBI(data, hc_labels$labels_single)
   #Getting rid of outliers with dbscan
-  dbscan_smal_labeled_data <- fix_sets(data, t(dbsc_lab$dbscan_smal))
-  dbscan_med_labeled_data  <- fix_sets(data, t(dbsc_lab$dbscan_med))
-  dbscan_big_labeled_data  <- fix_sets(data, t(dbsc_lab$dbscan_big))
+  dbscan_smal_labeled_data <- fix_sets(data, dbsc_lab$dbscan_smal)
+  dbscan_med_labeled_data  <- fix_sets(data, dbsc_lab$dbscan_med)
+  dbscan_big_labeled_data  <- fix_sets(data, dbsc_lab$dbscan_big)
   #DBI evaluation of dbscan clustering  MI DA COME ERRORE CHE dbscan_smal_labeled_data$labels è una riga e non una colonna
-  dbscan_smal <-  DBI(dbscan_smal_labeled_data$data,dbscan_smal_labeled_data$labels)
-  dbscan_med  <-  DBI(dbscan_med_labeled_data$data,dbscan_med_labeled_data$labels)
-  dbscan_big  <-  DBI(dbscan_big_labeled_data$data,dbscan_big_labeled_data$labels)
+  dbscan_smal <-  DBI(dbscan_smal_labeled_data$data,t(dbscan_smal_labeled_data$labels))
+  dbscan_med  <-  DBI(dbscan_med_labeled_data$data,t(dbscan_med_labeled_data$labels))
+  dbscan_big  <-  DBI(dbscan_big_labeled_data$data,t(dbscan_big_labeled_data$labels))
 
   # Combine results into a data frame
   DBI_EHR <- data.frame (kmeans2=kmeans2,kmeans3=kmeans3,kmeans5=kmeans5,

@@ -4,20 +4,27 @@
 #Loading data
 mydata<-read.csv("diabetes_type1.csv")
 
-#Executing kmeans clustering
-kmeans_result <- kmeans(mydata, centers = 2, iter.max=20, nstart = 25)
+#getting kmeans labels
+km_labels<-kmeans_labels(mydata)
 
-# Add the kmeans cluster results to the dataframe
-mydata$kmeans_cluster <- factor(kmeans_result$cluster)
+#getting hclust labels
+hc_labels<-hclust_labels(mydata)
 
-# Counting columns
-col<-ncol(mydata)
+#Getting dbscan parameters
+eps<- 25               #radius 
+minPts<-2             #minimal number of neighbours
+
+#getting dbscan labels
+dbsc_lab<-dbscan_labels(mydata,eps,minPts)
 
 # Calculate the four indexes
-indexes<-DBI(mydata[,1:col-1],mydata[,col])
+indexes<-DBI_EHRs(mydata,km_labels,hc_labels,dbsc_lab)
+
+#binding clusterings for printing
+labels<-list(mydata,km_labels,hc_labels,dbsc_lab)
 
 # Add name for saving!! This is the data csv print
-write.csv(mydata, file="diabetes_type1+kmeans.csv")   
+write.csv(labels, file="diabetes_type1+labels.csv")   
 
 # Add name for saving!! This is the DBI evaluation csv print
 write.csv(indexes, file="diabetes_type1_DBI.csv")  

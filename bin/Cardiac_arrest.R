@@ -13,8 +13,8 @@ km_labels<-kmeans_labels(mydata)
 hc_labels<-hclust_labels(mydata)
 
 #Getting dbscan parameters
-eps<- 3               #diameter/100
-minPts<-10            #ceiling(nrow(mydata)/50)
+eps<- 2.5            #Radius
+minPts<-5            #Minimal number of neighbours
 
 #getting dbscan labels
 dbsc_lab<-dbscan_labels(mydata,eps,minPts)
