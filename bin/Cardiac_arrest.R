@@ -6,20 +6,27 @@
 #Loading data
 mydata<-read.csv("Spain_cardiac_arrest.csv")
 
-#Executing kmeans clustering
-kmeans_result <- kmeans(mydata, centers = 2, iter.max=20, nstart = 25)
+#getting kmeans labels
+km_labels<-kmeans_labels(mydata)
 
-# Add the kmeans cluster results to the dataframe
-mydata$kmeans_cluster <- factor(kmeans_result$cluster)
+#getting hclust labels
+hc_labels<-hclust_labels(mydata)
 
-# Counting columns
-col<-ncol(mydata)
+#Getting dbscan parameters
+eps<- 3               #diameter/100
+minPts<-10            #ceiling(nrow(mydata)/50)
+
+#getting dbscan labels
+dbsc_lab<-dbscan_labels(mydata,eps,minPts)
 
 # Calculate the four indexes
-indexes<-DBI(mydata[,1:col-1],mydata[,col])
+indexes<-DBI_EHRs(mydata,km_labels,hc_labels,dbsc_lab)
+
+#binding clusterings for printing
+labels<-list(mydata,km_labels,hc_labels,dbsc_lab)
 
 # Add name for saving!! This is the data csv print
-write.csv(mydata, file="Spain_cardiac_arrest+kmeans.csv")  
+write.csv(labels, file="Spain_cardiac_arrest+labels.csv")  
 
 # Add name for saving!! This is the DBI evaluation csv print
-write.csv(indexes, file="Spain_cardiac_arrest_DBI.csv") 
+write.csv(indexes, file="Spain_cardiac_arrest_DBI.csv")  

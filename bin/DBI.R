@@ -1,22 +1,33 @@
 #Calls on DBIndexes and returns its result and their normalized 
 # value using DBnormalize
 
-DBI<-function(myset, clusters)
+DBI <- function(myset, clusters)
 {
-  #Initialization and calculating the indexes
-  daviesboul<-zeros(1,4)
-  temp <- DBIndexes(data=myset, clusters=clusters)
- 
-  #New vector of indexes with normalized versions too
-  daviesboul[1,1]<-as.double(temp[1,1])
-  daviesboul[1,2]<-as.double(temp[1,2])
-  daviesboul[1,3]<-DBnormalize(as.double(temp[1,1]))
-  daviesboul[1,4]<-DBnormalize(as.double(temp[1,2]))
+  # Convert clusters to a factor if they are not already
+  clusters <- as.factor(clusters)
   
-  #Formatting new entries
-  daviesboul[1,3] <- as.double(format( daviesboul[1,3], nsmall = 3, digits = 3, scientific = FALSE))
-  daviesboul[1,4] <- as.double(format( daviesboul[1,4], nsmall = 3, digits = 3, scientific = FALSE))
+  # Initialize and calculate the indexes
+  daviesboul <- matrix(0, nrow = 1, ncol = 4)
+  temp <- DBIndexes(data = myset, clusters = clusters)
+  
+  # Assign values and normalize
+  daviesboul[1, 1] <- as.double(temp[1, "average"])
+  daviesboul[1, 2] <- as.double(temp[1, "centroid"])
+  daviesboul[1, 3] <- DBnormalize(as.double(temp[1, "average"]))
+  daviesboul[1, 4] <- DBnormalize(as.double(temp[1, "centroid"]))
+  
+  # Format new entries
+  daviesboul[1, 3] <- as.double(format(daviesboul[1, 3], nsmall = 3, digits = 3, scientific = FALSE))
+  daviesboul[1, 4] <- as.double(format(daviesboul[1, 4], nsmall = 3, digits = 3, scientific = FALSE))
+  
+  # Create a named list for return
+  return(t(data.frame(average =   format(daviesboul[1, 1], nsmall = 3, digits = 3, scientific = FALSE),
+                      centroid =  format(daviesboul[1, 2], nsmall = 3, digits = 3, scientific = FALSE),
+                      norm_ave =  format(daviesboul[1, 3], nsmall = 3, digits = 3, scientific = FALSE),
+                      norm_cent = format(daviesboul[1, 4], nsmall = 3, digits = 3, scientific = FALSE)
+                      )
+           )
+         )
   
   
-  return(list(average = daviesboul[1,1], centroid = daviesboul[1,2],norm_ave=daviesboul[1,3], norm_cent=daviesboul[1,4]))
 }
