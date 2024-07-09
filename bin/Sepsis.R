@@ -23,6 +23,12 @@ indexes<-DBI_EHRs(mydata,km_labels,hc_labels,dbsc_lab)
 #binding clusterings for printing
 labels<-list(mydata,km_labels,hc_labels,dbsc_lab)
 
+#Find the highest DBI scores
+highest_DBI_result <- find_highest_DBI(indexes)
+
+# Print the result
+print(highest_DBI_result)
+
 # Add name for saving!! This is the data csv print
 write.csv(labels, file="Sepsis+labels.csv")  
 

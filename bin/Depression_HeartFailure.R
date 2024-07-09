@@ -26,6 +26,26 @@ indexes<-DBI_EHRs(mydata,km_labels,hc_labels,dbsc_lab)
 #binding clusterings for printing
 labels<-list(mydata,km_labels,hc_labels,dbsc_lab)
 
+#Find the highest DBI scores
+highest_DBI_result <- find_highest_DBI(indexes)
+
+# Print the result
+print(highest_DBI_result)
+
+#Calculate cardinality of clusters
+cardinality_proportions <- calculate_cardinality_proportion(mydata,km_labels,hc_labels,dbsc_lab)
+
+#Print and plot the result
+print(cardinality_proportions)
+plot_cluster_percentages(cardinality_proportions)
+#Compare clusterings in a chart
+compare_clusterings(labels)
+
+extracted_info <- extract_clustering_info(mydata, labels)
+
+# check the information
+print(extracted_info)
+
 # Add name for saving!! This is the data csv print
 write.csv(labels, file="depression_heart_failure+labels.csv")   
 

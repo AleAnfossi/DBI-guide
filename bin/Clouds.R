@@ -6,12 +6,12 @@
 
 
 #Cardinality of each initial cluster 
-number<-10000   #<------------
+number<-100   #<------------
 
 #Dataset creation single cloud of 2*number
-#mydata<-SingCloud(number)[, 1:2]
+mydata<-SingCloud(number)[, 1:2]
 #Dataset creation seperate clouds of number
-mydata<-SepClouds(number)[, 1:2]
+#mydata<-SepClouds(number)[, 1:2]
 
 #Executing kmeans clustering
 kmeans_result <- kmeans(mydata, centers = 2, iter.max=20, nstart = 25)

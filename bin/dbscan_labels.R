@@ -17,9 +17,9 @@ dbscan_labels<-function(data,eps,minPts)
   #dbscan_big  <- dbscan(data, eps=eps+5, minPts = minPts-5, weights = NULL, borderPoints = TRUE)$cluster
   
   #Heart_failure
-  #dbscan_smal <- dbscan(data, eps=eps-10, minPts = minPts+2, weights = NULL, borderPoints = TRUE)$cluster
-  #dbscan_med  <- dbscan(data, eps=eps, minPts = minPts, weights = NULL, borderPoints = TRUE)$cluster
-  #dbscan_big  <- dbscan(data, eps=eps+10, minPts = minPts-2, weights = NULL, borderPoints = TRUE)$cluster
+  dbscan_smal <- dbscan(data, eps=eps-10, minPts = minPts+2, weights = NULL, borderPoints = TRUE)$cluster
+  dbscan_med  <- dbscan(data, eps=eps, minPts = minPts, weights = NULL, borderPoints = TRUE)$cluster
+  dbscan_big  <- dbscan(data, eps=eps+10, minPts = minPts-2, weights = NULL, borderPoints = TRUE)$cluster
   
   #Diabetes
   #dbscan_smal <- dbscan(data, eps=eps-3, minPts = minPts+1, weights = NULL, borderPoints = TRUE)$cluster

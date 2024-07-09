@@ -7,7 +7,7 @@
 
 
 #Number of dimensions
-dim<-100      #<------
+dim<-20      #<------
 #Number of vectors
 num<-2*dim
 
@@ -18,8 +18,14 @@ data <- rbind(zeros, ones)
 
 # Initial kmeans and Davies-Bouldin index calculation
 kmeans_result <- kmeans(data, centers = 2)
-db_indices <- DBI(data, kmeans_result$cluster)
+db_indices <- data.frame(t(DBI(data, kmeans_result$cluster)))
 
+# Store the metrics
+metrics<-extract_cluster_metrics(data,kmeans_result$cluster)
+metrics_store <- data.frame(
+  Step = 0,
+  metrics
+)
 # Store the results
 results <- data.frame(
   Step = 0,
@@ -60,7 +66,7 @@ for (i in 1:num)
   
   #kmeans and DBI execution at each step
   kmeans_result <- kmeans(data, centers = 2, iter.max=30)
-  db_indices <- DBI(data, kmeans_result$cluster)
+  db_indices <- data.frame(t(DBI(data, kmeans_result$cluster)))
   
   #Store results
   results <- rbind(results, data.frame(
@@ -80,33 +86,67 @@ for (i in 1:num)
     Step = i,
     kmeans_result$cluster
     ))
+  #Store metrics
+  metrics<-extract_cluster_metrics(data,kmeans_result$cluster)
+  metrics_store<- rbind(metrics_store, data.frame(
+    Step = i,
+    metrics
+    ))
+  
 }
 
-# Assuming your dataframe is named 'results' and has columns named Col1, Col2, Col3, Col4, Col5
+results$Step <- as.numeric(results$Step)
+results$DB_Index_Avg <- as.numeric(results$DB_Index_Avg)
+results$DB_Index_Centroid <- as.numeric(results$DB_Index_Centroid)
+results$Norm_DB_Index_Avg <- as.numeric(results$Norm_DB_Index_Avg)
+results$Norm_DB_Index_Centroid <- as.numeric(results$Norm_DB_Index_Centroid)
 
 # Create the individual plots
-p1 <- ggplot(results, aes(x = results[,1], y = results[,2])) +
+plot1 <- ggplot(results, aes(x = Step, y = DB_Index_Avg)) +
+  geom_line() +
   geom_point() +
-  labs(title = "Average dist",x="Step",y="DBI")
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 5), labels = scales::number_format(accuracy = 0.5)) +
+  ggtitle("DB Index Average over Steps") +
+  xlab("Step") +
+  ylab("DBI") +
+  theme_minimal()
 
-p2 <- ggplot(results, aes(x = results[,1], y =results[,3])) +
+# Plot for DB_Index_Centroid
+plot2 <- ggplot(results, aes(x = Step, y = DB_Index_Centroid)) +
+  geom_line() +
   geom_point() +
-  labs(title = "Centroid dist",x="Step",y="DBI")
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 5), labels = scales::number_format(accuracy = 0.5)) +
+  ggtitle("DB Index Centroid over Steps") +
+  xlab("Step") +
+  ylab("DBI") +
+  theme_minimal()
 
-p3 <- ggplot(results, aes(x = results[,1], y = results[,4])) +
+# Plot for Norm_DB_Index_Avg
+plot3 <- ggplot(results, aes(x = Step, y = Norm_DB_Index_Avg)) +
+  geom_line() +
   geom_point() +
-  labs(title = "Norm average",x="Step",y="DBI")
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 5), labels = scales::number_format(accuracy = 0.5)) +
+  ggtitle("Normalized DB Index Average over Steps") +
+  xlab("Step") +
+  ylab("DBI") +
+  theme_minimal()
 
-p4 <- ggplot(results, aes(x = results[,1], y = results[,5])) +
+# Plot for Norm_DB_Index_Centroid
+plot4 <- ggplot(results, aes(x = Step, y = Norm_DB_Index_Centroid)) +
+  geom_line() +
   geom_point() +
-  labs(title = "Norm centroid",x="Step",y="DBI")
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 5), labels = scales::number_format(accuracy = 0.5)) +
+  ggtitle("Normalized DB Index Centroid over Steps") +
+  xlab("Step") +
+  ylab("DBI") +
+  theme_minimal()
 
 # Arrange the plots together
-# Option 1: Using gridExtra
-grid.arrange(p1, p2, p3, p4, ncol = 2)
+grid.arrange(plot1, plot2, plot3, plot4, ncol = 2)
 
 write.csv(results, file="100Matrix_DBI.csv")#<--------
 write.csv(data_store, file="100Matrix_data.csv")#<--------
 write.csv(kmeans_store, file="100Matrix_kmeans.csv")#<--------
+write.csv(metrics_store, file="100Matrix_metrics.csv")
 
 

@@ -6,25 +6,24 @@ DBI <- function(myset, clusters)
   # Convert clusters to a factor if they are not already
   clusters <- as.factor(clusters)
   
-  # Initialize and calculate the indexes
-  daviesboul <- matrix(0, nrow = 1, ncol = 4)
-  temp <- DBIndexes(data = myset, clusters = clusters)
+  # Initialize and calculate the indexes, temp no dbindexes_output
+  dbindexes_output <- DBIndexes(data = myset, clusters = clusters)
   
-  # Assign values and normalize
-  daviesboul[1, 1] <- as.double(temp[1, "average"])
-  daviesboul[1, 2] <- as.double(temp[1, "centroid"])
-  daviesboul[1, 3] <- DBnormalize(as.double(temp[1, "average"]))
-  daviesboul[1, 4] <- DBnormalize(as.double(temp[1, "centroid"]))
+  # Assign values and normalize togliere matrice e mettere a parole
+  averageintra  <- as.double(dbindexes_output[1, "average"])
+  centroidintra <- as.double(dbindexes_output[1, "centroid"])
+  normave  <- DBnormalize(as.double(dbindexes_output[1, "average"]))
+  normcent <- DBnormalize(as.double(dbindexes_output[1, "centroid"]))
   
   # Format new entries
-  daviesboul[1, 3] <- as.double(format(daviesboul[1, 3], nsmall = 3, digits = 3, scientific = FALSE))
-  daviesboul[1, 4] <- as.double(format(daviesboul[1, 4], nsmall = 3, digits = 3, scientific = FALSE))
+  normaverage  <- as.double(format(normave, nsmall = 3, digits = 3, scientific = FALSE))
+  normcentroid <- as.double(format(normcent, nsmall = 3, digits = 3, scientific = FALSE))
   
   # Create a named list for return
-  return(t(data.frame(average =   format(daviesboul[1, 1], nsmall = 3, digits = 3, scientific = FALSE),
-                      centroid =  format(daviesboul[1, 2], nsmall = 3, digits = 3, scientific = FALSE),
-                      norm_ave =  format(daviesboul[1, 3], nsmall = 3, digits = 3, scientific = FALSE),
-                      norm_cent = format(daviesboul[1, 4], nsmall = 3, digits = 3, scientific = FALSE)
+  return(t(data.frame(average   = format(averageintra, nsmall = 3, digits = 3, scientific = FALSE),
+                      centroid  = format(centroidintra, nsmall = 3, digits = 3, scientific = FALSE),
+                      norm_ave  = format(normaverage, nsmall = 3, digits = 3, scientific = FALSE),
+                      norm_cent = format(normcentroid, nsmall = 3, digits = 3, scientific = FALSE)
                       )
            )
          )
