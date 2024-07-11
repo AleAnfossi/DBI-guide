@@ -4,10 +4,11 @@
 #N-dimensional vector between zero and one.
 #At each step a clustering with kmeans and the DBI evaluation
 #Arrows point where to modify at each change
+#In this version k_means changes number of centers as the changes grow
 
 
 #Number of dimensions
-dim<-5      #<------
+dim<-20      #<------
 #Number of vectors
 num<-2*dim
 
@@ -40,7 +41,6 @@ data_store<-data.frame(
   data
 )
 
-
 # Store k-means results with vectors
 kmeans_store <- data.frame(
   Step = 0,
@@ -59,15 +59,15 @@ for (i in 1:num)
   #Alternating cluster modyfied
   if (i %% 2 == 1) 
   {
-     data[(i + 1) / 2, ] <- random_vector()
+    data[(i + 1) / 2, ] <- random_vector()
   }
   else
   {
-     data[dim + i / 2, ] <- random_vector()
+    data[dim + i / 2, ] <- random_vector()
   }
   
   #kmeans and DBI execution at each step
-  kmeans_result <- kmeans(data, centers = 2, iter.max=30)
+  kmeans_result <- kmeans(data, centers = 1+ceiling(i/2), iter.max=30)
   db_indices <- data.frame(t(DBI(data, kmeans_result$cluster)))
   
   #Store results
@@ -79,7 +79,7 @@ for (i in 1:num)
     Norm_DB_Index_Centroid = db_indices$norm_cent
   ))
   #Store data
-  data_store <- rbind(data_store, data.frame(
+  data_store <- list(data_store, data.frame(
     Step = i,
     data 
   ))
@@ -91,10 +91,10 @@ for (i in 1:num)
   ))
   #Store metrics
   metrics<-extract_cluster_metrics(data,kmeans_result$cluster)
-  metrics_store<- rbind(metrics_store, data.frame(
+  metrics_store<- list(metrics_store, data.frame(
     Step = i,
     metrics
-    ))
+  ))
   
 }
 
@@ -147,15 +147,17 @@ plot4 <- ggplot(results, aes(x = Step, y = Norm_DB_Index_Centroid)) +
 # Arrange the plots together
 grid.arrange(plot1, plot2, plot3, plot4, ncol = 2)
 
-#Save on csv all the results
-file_name_dbi <- paste0(dim, "Matrix_DBI.csv")
-write.csv(results, file=file_name_dbi)
-file_name_data <- paste0(dim, "Matrix_data.csv")
-write.csv(data_store, file=file_name_data)
-file_name_kmeans <- paste0(dim, "Matrix_kmeans.csv")
-write.csv(kmeans_store, file=file_name_kmeans)
-file_name_metrics <- paste0(dim, "Matrix_metrics.csv")
-write.csv(metrics_store, file=file_name_metrics)
-
-
-
+#Save on txt all the results
+file_name <- paste0(dim, "Growing_kmeans_Matrix.txt")
+# Open a connection to a text file
+sink(file_name)
+# Print Results
+print(results)
+# Print Data
+print(data_store)
+# Print the labels
+print(kmeans_store)
+# Print metrics
+print(metrics_store)
+# Close the connection
+sink()

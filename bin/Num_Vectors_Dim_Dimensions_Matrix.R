@@ -1,19 +1,12 @@
-#Script where a matrix with N ones N-dimensional vectors
-#and N zero N-dimensional vectors representing the data points
-#get modifyed 2N-times alternating to ones and zeros, with a random
-#N-dimensional vector between zero and one.
-#At each step a clustering with kmeans and the DBI evaluation
-#Arrows point where to modify at each change
+# Number of dimensions
+dim <- 3      # <------
+# Number of vectors
+n <- 5        # <------
+num <- 2 * n
 
-
-#Number of dimensions
-dim<-5      #<------
-#Number of vectors
-num<-2*dim
-
-# Creating the initial dataset, vectors are columns
-zeros <- matrix(0, ncol = dim, nrow = dim)
-ones <- matrix(1, ncol = dim, nrow = dim)
+# Creating the initial dataset, vectors are rows
+zeros <- matrix(0, ncol = dim, nrow = num / 2)
+ones <- matrix(1, ncol = dim, nrow = num / 2)
 data <- rbind(zeros, ones)
 
 # Initial kmeans and Davies-Bouldin index calculation
@@ -21,11 +14,12 @@ kmeans_result <- kmeans(data, centers = 2)
 db_indices <- data.frame(t(DBI(data, kmeans_result$cluster)))
 
 # Store the metrics
-metrics<-extract_cluster_metrics(data,kmeans_result$cluster)
+metrics <- extract_cluster_metrics(data, kmeans_result$cluster)
 metrics_store <- data.frame(
   Step = 0,
   metrics
 )
+
 # Store the results
 results <- data.frame(
   Step = 0,
@@ -34,12 +28,12 @@ results <- data.frame(
   Norm_DB_Index_Avg = db_indices$norm_ave,
   Norm_DB_Index_Centroid = db_indices$norm_cent
 )
+
 # Store the data
-data_store<-data.frame(
-  Step=0,
+data_store <- data.frame(
+  Step = 0,
   data
 )
-
 
 # Store k-means results with vectors
 kmeans_store <- data.frame(
@@ -54,23 +48,19 @@ random_vector <- function() {
 }
 
 # Modify vectors in a cyclic manner
-for (i in 1:num) 
-{
-  #Alternating cluster modyfied
-  if (i %% 2 == 1) 
-  {
-     data[(i + 1) / 2, ] <- random_vector()
-  }
-  else
-  {
-     data[dim + i / 2, ] <- random_vector()
+for (i in 1:num) {
+  # Alternating cluster modified
+  if (i %% 2 == 1) {
+    data[(i + 1) / 2, ] <- random_vector()
+  } else {
+    data[n + i / 2, ] <- random_vector()
   }
   
-  #kmeans and DBI execution at each step
-  kmeans_result <- kmeans(data, centers = 2, iter.max=30)
+  # kmeans and DBI execution at each step
+  kmeans_result <- kmeans(data, centers = 2, iter.max = 30)
   db_indices <- data.frame(t(DBI(data, kmeans_result$cluster)))
   
-  #Store results
+  # Store results
   results <- rbind(results, data.frame(
     Step = i,
     DB_Index_Avg = db_indices$average,
@@ -78,24 +68,51 @@ for (i in 1:num)
     Norm_DB_Index_Avg = db_indices$norm_ave,
     Norm_DB_Index_Centroid = db_indices$norm_cent
   ))
-  #Store data
+  
+  # Store data
   data_store <- rbind(data_store, data.frame(
     Step = i,
-    data 
+    data
   ))
+  
   # Store k-means results with vectors
   kmeans_store <- rbind(kmeans_store, data.frame(
     Step = i,
     Cluster = kmeans_result$cluster,
     data
   ))
-  #Store metrics
-  metrics<-extract_cluster_metrics(data,kmeans_result$cluster)
-  metrics_store<- rbind(metrics_store, data.frame(
+  
+  # Store metrics
+  metrics <- extract_cluster_metrics(data, kmeans_result$cluster)
+  metrics_store <- rbind(metrics_store, data.frame(
     Step = i,
     metrics
-    ))
+  ))
   
+  # Only plot the clustering if dim is 2
+  if (dim == 2) {
+    # Create a data frame for plotting
+    plot_data <- as.data.frame(data)
+    colnames(plot_data) <- c("X1", "X2")
+    plot_data$Cluster <- as.factor(kmeans_result$cluster)
+    
+    # Extract centroids for plotting
+    centers <- as.data.frame(kmeans_result$centers)
+    colnames(centers) <- c("X1", "X2")
+    centers$Cluster <- as.factor(1:nrow(centers))
+    
+    # Create the plot
+    cluster_plot <- ggplot(plot_data, aes(x = X1, y = X2, color = Cluster)) +
+      geom_point(size = 3) +
+      geom_point(data = centers, aes(x = X1, y = X2), color = 'green', shape = 8, size = 5) +
+      ggtitle("Clustering Results") +
+      xlab("Dimension 1") +
+      ylab("Dimension 2") +
+      theme_minimal()
+    
+    # Print the plot
+    print(cluster_plot)
+  }
 }
 
 results$Step <- as.numeric(results$Step)
@@ -147,15 +164,12 @@ plot4 <- ggplot(results, aes(x = Step, y = Norm_DB_Index_Centroid)) +
 # Arrange the plots together
 grid.arrange(plot1, plot2, plot3, plot4, ncol = 2)
 
-#Save on csv all the results
-file_name_dbi <- paste0(dim, "Matrix_DBI.csv")
-write.csv(results, file=file_name_dbi)
-file_name_data <- paste0(dim, "Matrix_data.csv")
-write.csv(data_store, file=file_name_data)
-file_name_kmeans <- paste0(dim, "Matrix_kmeans.csv")
-write.csv(kmeans_store, file=file_name_kmeans)
-file_name_metrics <- paste0(dim, "Matrix_metrics.csv")
-write.csv(metrics_store, file=file_name_metrics)
-
-
-
+# Save on csv all the results
+file_name_dbi <- paste0(num, "_Vectors_", dim, "Dimensions_Matrix_DBI.csv")
+write.csv(results, file = file_name_dbi)
+file_name_data <- paste0(num, "_Vectors_", dim, "Dimensions_Matrix_data.csv")
+write.csv(data_store, file = file_name_data)
+file_name_kmeans <- paste0(num, "_Vectors_", dim, "Dimensions_Matrix_kmeans.csv")
+write.csv(kmeans_store, file = file_name_kmeans)
+file_name_metrics <- paste0(num, "_Vectors_", dim, "Dimensions_Matrix_metrics.csv")
+write.csv(metrics_store, file = file_name_metrics)

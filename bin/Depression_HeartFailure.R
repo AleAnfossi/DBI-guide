@@ -16,9 +16,10 @@ hc_labels<-hclust_labels(mydata)
 #Getting dbscan parameters
 eps<- 50              #radius
 minPts<-10            #minimal number of neighbours
-
+#Setting the case
+case <- "Heart_failure"
 #getting dbscan labels
-dbsc_lab<-dbscan_labels(mydata,eps,minPts)
+dbsc_lab<-dbscan_labels(mydata,eps,minPts,case)
 
 # Calculate the four indexes
 indexes<-DBI_EHRs(mydata,km_labels,hc_labels,dbsc_lab)
@@ -29,28 +30,32 @@ labels<-list(mydata,km_labels,hc_labels,dbsc_lab)
 #Find the highest DBI scores
 highest_DBI_result <- find_highest_DBI(indexes)
 
-# Print the result
-print(highest_DBI_result)
-
 #Calculate cardinality of clusters
 cardinality_proportions <- calculate_cardinality_proportion(mydata,km_labels,hc_labels,dbsc_lab)
 
-#Print and plot the result
-print(cardinality_proportions)
+#Plot the result
 plot_cluster_percentages(cardinality_proportions)
 #Compare clusterings in a chart
 compare_clusterings(labels)
 
+#Exctract information DBI uses
 extracted_info <- extract_clustering_info(mydata, labels)
-
-# check the information
+# Open a connection to a text file
+sink("Depression_Heart_Failure_info.txt")
+# Print the result
+print(highest_DBI_result)
+# Print cardinality proportions
+print(cardinality_proportions)
+# Print the information
 print(extracted_info)
+# Close the connection
+sink()
 
 # Add name for saving!! This is the data csv print
-write.csv(labels, file="depression_heart_failure+labels.csv")   
+write.csv(labels, file="Depression_Heart_Failure+labels.csv")   
 
 # Add name for saving!! This is the DBI evaluation csv print
-write.csv(indexes, file="depression_heart_failure_DBI.csv") 
+write.csv(indexes, file="Depression_Heart_Failure_DBI.csv") 
 
 
  
