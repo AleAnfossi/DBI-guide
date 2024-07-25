@@ -46,6 +46,7 @@ kmeans_store <- data.frame(
 random_vector <- function() {
   runif(dim, 0, 1)
 }
+ 
 
 # Modify vectors in a cyclic manner
 for (i in 1:num) {
@@ -57,7 +58,7 @@ for (i in 1:num) {
   }
   
   # kmeans and DBI execution at each step
-  kmeans_result <- kmeans(data, centers = 2, iter.max =50+i )
+  kmeans_result <- kmeans(data, centers = 2, iter.max = 50 + i)
   db_indices <- data.frame(t(DBI(data, kmeans_result$cluster)))
   
   # Store results
@@ -89,30 +90,22 @@ for (i in 1:num) {
     metrics
   ))
   
-  # Only plot the clustering if dim is 2
-  if (dim == 2) {
-    # Create a data frame for plotting
-    plot_data <- as.data.frame(data)
-    colnames(plot_data) <- c("X1", "X2")
-    plot_data$Cluster <- as.factor(kmeans_result$cluster)
+  # Hierarchical clustering and DBI calculation
+  hclust_results <- hclust_labels(data)
+  for (method in colnames(hclust_results)) {
+    hclust_db_indices <- data.frame(t(DBI(data, hclust_results[[method]])))
     
-    # Extract centroids for plotting
-    centers <- as.data.frame(kmeans_result$centers)
-    colnames(centers) <- c("X1", "X2")
-    centers$Cluster <- as.factor(1:nrow(centers))
-    
-    # Create the plot
-    cluster_plot <- ggplot(plot_data, aes(x = X1, y = X2, color = Cluster)) +
-      geom_point(size = 3) +
-      geom_point(data = centers, aes(x = X1, y = X2), color = 'green', shape = 8, size = 5) +
-      ggtitle("Clustering Results") +
-      xlab("Dimension 1") +
-      ylab("Dimension 2") +
-      theme_grey()
-    
-    # Print the plot
-    print(cluster_plot)
+    # Store results for hierarchical clustering
+    results <- rbind(results, data.frame(
+      Step = i,
+      DB_Index_Avg = hclust_db_indices$average,
+      DB_Index_Centroid = hclust_db_indices$centroid,
+      Norm_DB_Index_Avg = hclust_db_indices$norm_ave,
+      Norm_DB_Index_Centroid = hclust_db_indices$norm_cent
+    ))
   }
+  
+ 
 }
 
 results$Step <- as.numeric(results$Step)
@@ -163,13 +156,3 @@ plot4 <- ggplot(results, aes(x = Step, y = Norm_DB_Index_Centroid)) +
 
 # Arrange the plots together
 grid.arrange(plot1, plot2, plot3, plot4, ncol = 2)
-
-# Save on csv all the results
-file_name_dbi <- paste0(num, "_Vectors_", dim, "Dimensions_Matrix_DBI.csv")
-write.csv(results, file = file_name_dbi)
-file_name_data <- paste0(num, "_Vectors_", dim, "Dimensions_Matrix_data.csv")
-write.csv(data_store, file = file_name_data)
-file_name_kmeans <- paste0(num, "_Vectors_", dim, "Dimensions_Matrix_kmeans.csv")
-write.csv(kmeans_store, file = file_name_kmeans)
-file_name_metrics <- paste0(num, "_Vectors_", dim, "Dimensions_Matrix_metrics.csv")
-write.csv(metrics_store, file = file_name_metrics)

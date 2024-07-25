@@ -21,5 +21,5 @@ plot_cluster_flow <- function(data, labels1, labels2) {
     labs(x = "Clusters from Algorithm 1", y = "Number of Points",
          fill = "Clusters from Algorithm 2",
          title = "Flow of Points Between Two Clusterings") +
-    theme_minimal()
+    theme_grey()
 }

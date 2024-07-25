@@ -3,7 +3,7 @@ hclust_labels<-function(data)
   # Compute the Euclidean distance matrix
   dist_matrix <- dist(data, method = "euclidean")
   # Specify the number of clusters
-  k <- 3
+  k <- 2
   
   # Average linkage
   hc_average  <- hclust(dist_matrix, method = "average")

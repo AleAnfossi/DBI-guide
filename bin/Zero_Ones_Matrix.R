@@ -7,7 +7,7 @@
 
 
 #Number of dimensions
-dim<-5      #<------
+dim<-100      #<------
 #Number of vectors
 num<-2*dim
 
@@ -67,7 +67,7 @@ for (i in 1:num)
   }
   
   #kmeans and DBI execution at each step
-  kmeans_result <- kmeans(data, centers = 2, iter.max=30)
+  kmeans_result <- kmeans(data, centers = 2, iter.max=100+i)
   db_indices <- data.frame(t(DBI(data, kmeans_result$cluster)))
   
   #Store results
@@ -112,7 +112,7 @@ plot1 <- ggplot(results, aes(x = Step, y = DB_Index_Avg)) +
   ggtitle("DB Index Average over Steps") +
   xlab("Step") +
   ylab("DBI") +
-  theme_minimal()
+  theme_grey()
 
 # Plot for DB_Index_Centroid
 plot2 <- ggplot(results, aes(x = Step, y = DB_Index_Centroid)) +
@@ -122,7 +122,7 @@ plot2 <- ggplot(results, aes(x = Step, y = DB_Index_Centroid)) +
   ggtitle("DB Index Centroid over Steps") +
   xlab("Step") +
   ylab("DBI") +
-  theme_minimal()
+  theme_grey()
 
 # Plot for Norm_DB_Index_Avg
 plot3 <- ggplot(results, aes(x = Step, y = Norm_DB_Index_Avg)) +
@@ -132,7 +132,7 @@ plot3 <- ggplot(results, aes(x = Step, y = Norm_DB_Index_Avg)) +
   ggtitle("Normalized DB Index Average over Steps") +
   xlab("Step") +
   ylab("DBI") +
-  theme_minimal()
+  theme_grey()
 
 # Plot for Norm_DB_Index_Centroid
 plot4 <- ggplot(results, aes(x = Step, y = Norm_DB_Index_Centroid)) +
@@ -142,7 +142,7 @@ plot4 <- ggplot(results, aes(x = Step, y = Norm_DB_Index_Centroid)) +
   ggtitle("Normalized DB Index Centroid over Steps") +
   xlab("Step") +
   ylab("DBI") +
-  theme_minimal()
+  theme_grey()
 
 # Arrange the plots together
 grid.arrange(plot1, plot2, plot3, plot4, ncol = 2)

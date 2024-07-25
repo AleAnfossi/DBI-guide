@@ -31,7 +31,7 @@ write.csv(indexes, file="10000sep_DBI.csv") #<-----------
 # Plot the kmeans clusters
 ggplot(mydata, aes(x = x, y = y, color = kmeans_cluster)) +
   geom_point() +
-  theme_minimal() +
+  theme_grey() +
   labs(title = "K-Means Clustering",
        x = "Dimension 1",
        y = "Dimension 2")
