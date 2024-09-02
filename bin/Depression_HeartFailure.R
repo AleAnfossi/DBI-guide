@@ -14,8 +14,8 @@ km_labels<-kmeans_labels(mydata)
 hc_labels<-hclust_labels(mydata)
 
 #Getting dbscan parameters
-eps<- 50              #radius
-minPts<-10            #minimal number of neighbours
+eps<- 60              #radius
+minPts<-8           #minimal number of neighbours
 #Setting the case
 case <- "Heart_failure"
 #getting dbscan labels

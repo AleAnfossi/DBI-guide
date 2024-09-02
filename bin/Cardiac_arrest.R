@@ -13,8 +13,8 @@ km_labels<-kmeans_labels(mydata)
 hc_labels<-hclust_labels(mydata)
 
 #Getting dbscan parameters
-eps<- 3              #Radius
-minPts<-6            #Minimal number of neighbours
+eps<- 3.5             #Radius
+minPts<-5            #Minimal number of neighbours
 #Setting the case
 case <- "Cardiac_arrest"
 #getting dbscan labels
@@ -30,9 +30,6 @@ labels<-list(mydata,km_labels,hc_labels,dbsc_lab)
 #Find the highest DBI scores
 highest_DBI_result <- find_highest_DBI(indexes)
 
-# Find the best parameters
-best_params <- find_best_parameters(highest_DBI_result)
-
 #Calculate cardinality of clusters
 cardinality_proportions <- calculate_cardinality_proportion(mydata,km_labels,hc_labels,dbsc_lab)
 
@@ -47,8 +44,6 @@ extracted_info <- extract_clustering_info(mydata, labels)
 sink("Spain_cardiac_arrest_info.txt")
 # Print the result
 print(highest_DBI_result)
-# Print the best parameters
-print(best_params)
 # Print cardinality proportions
 print(cardinality_proportions)
 # Print the information

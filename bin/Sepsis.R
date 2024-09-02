@@ -10,8 +10,8 @@ km_labels<-kmeans_labels(mydata)
 #getting hclust labels
 hc_labels<-hclust_labels(mydata)
 
-#Getting dbscan parameters
-eps<- 20              #radius 
+#Getting dbscan parameters(I struggled to find better ones)
+eps<- 30              #radius 
 minPts<-10            #minimal number of neighbours
 #Setting the case
 case <- "Sepsis"
