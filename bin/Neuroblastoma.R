@@ -51,9 +51,10 @@ print(extracted_info)
 # Close the connection
 sink()
 
-
 # Add name for saving!! This is the data csv print
 write.csv(labels, file="Neuroblastoma+labels.csv")  
 
 # Add name for saving!! This is the DBI evaluation csv print
 write.csv(indexes, file="Neuroblastoma_DBI.csv")  
+
+describe_clustering_result(highest_DBI_result,4)

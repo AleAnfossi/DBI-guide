@@ -1,0 +1,419 @@
+$highest_averageintra_algo
+[1] "dbscan_med"
+
+$highest_averageintra_value
+[1] 0.708
+
+$highest_centroidintra_algo
+[1] "dbscan_med"
+
+$highest_centroidintra_value
+[1] 0.77
+
+$kmeans2
+clusters
+       1        2 
+63.76471 36.23529 
+
+$kmeans3
+clusters
+       1        2        3 
+48.23529 36.23529 15.52941 
+
+$kmeans5
+clusters
+        1         2         3         4         5 
+10.823529 31.058824  5.411765 38.352941 14.352941 
+
+$hc_ave
+clusters
+        1         2         3         4 
+53.176471 10.823529 30.588235  5.411765 
+
+$hc_comp
+clusters
+        1         2         3         4 
+40.470588 10.823529 43.294118  5.411765 
+
+$hc_sing
+clusters
+         1          2          3          4 
+98.8235294  0.2352941  0.2352941  0.7058824 
+
+$dbscan_smal
+clusters
+        0         1         2         3 
+30.117647 41.882353 26.588235  1.411765 
+
+$dbscan_med
+clusters
+        0         1         2         3 
+20.000000 47.764706 29.411765  2.823529 
+
+$dbscan_big
+clusters
+        0         1         2         3 
+17.882353 48.941176 29.882353  3.294118 
+
+$metrics_kmeans2
+   intracls_average.c1 intracls_average.c2 intracls_centroid.c1
+c1             297.067             120.181              224.531
+c2             297.067             120.181              224.531
+   intracls_centroid.c2 intercls_centroid.c1 intercls_centroid.c2
+c1               88.394                0.000              562.933
+c2               88.394              562.933                0.000
+   cluster_size cluster_center.1 cluster_center.2 cluster_center.3
+c1          271          73.8708           0.5830           5.3911
+c2          154          72.8961           0.5649           3.6883
+   cluster_center.4 cluster_center.5 cluster_center.6 cluster_center.7
+c1         123.6845          53.3858          46.6581         138.8192
+c2         124.3117          63.6843          44.7210         139.7273
+   cluster_center.8 cluster_center.9 cluster_center.10
+c1          31.6568           0.4576            0.4391
+c2          25.1169           0.3701            0.2857
+   cluster_center.11 cluster_center.12 cluster_center.13
+c1            0.7232          595.0590            0.3358
+c2            0.6948          723.3442            0.0519
+   cluster_center.14 cluster_center.15
+c1          131.8155            0.9520
+c2          679.7922            0.2662
+
+$metrics_kmeans3
+   intracls_average.c1 intracls_average.c2 intracls_average.c3
+c1             162.791             120.181             235.196
+c2             162.791             120.181             235.196
+c3             162.791             120.181             235.196
+   intracls_centroid.c1 intracls_centroid.c2 intracls_centroid.c3
+c1              116.903               88.394              172.845
+c2              116.903               88.394              172.845
+c3              116.903               88.394              172.845
+   intercls_centroid.c1 intercls_centroid.c2 intercls_centroid.c3
+c1                0.000              548.263              477.892
+c2              548.263                0.000              735.042
+c3              477.892              735.042                0.000
+   cluster_size cluster_center.1 cluster_center.2 cluster_center.3
+c1          205          72.4537           0.5805           5.0829
+c2          154          72.8961           0.5649           3.6883
+c3           66          78.2727           0.5909           6.3485
+   cluster_center.4 cluster_center.5 cluster_center.6 cluster_center.7
+c1         124.9000          56.4046          47.0412         138.8049
+c2         124.3117          63.6843          44.7210         139.7273
+c3         119.9091          44.0092          45.4680         138.8636
+   cluster_center.8 cluster_center.9 cluster_center.10
+c1          29.7951           0.4293            0.4488
+c2          25.1169           0.3701            0.2857
+c3          37.4394           0.5455            0.4091
+   cluster_center.11 cluster_center.12 cluster_center.13
+c1            0.6878          711.3756            0.1220
+c2            0.6948          723.3442            0.0519
+c3            0.8333          233.7727            1.0000
+   cluster_center.14 cluster_center.15
+c1          131.7366            1.0000
+c2          679.7922            0.2662
+c3          132.0606            0.8030
+
+$metrics_kmeans5
+   intracls_average.c1 intracls_average.c2 intracls_average.c3
+c1             168.117              71.887             140.092
+c2             168.117              71.887             140.092
+c3             168.117              71.887             140.092
+c4             168.117              71.887             140.092
+c5             168.117              71.887             140.092
+   intracls_average.c4 intracls_average.c5 intracls_centroid.c1
+c1             122.286             130.761              122.608
+c2             122.286             130.761              122.608
+c3             122.286             130.761              122.608
+c4             122.286             130.761              122.608
+c5             122.286             130.761              122.608
+   intracls_centroid.c2 intracls_centroid.c3 intracls_centroid.c4
+c1               49.960               98.089               87.137
+c2               49.960               98.089               87.137
+c3               49.960               98.089               87.137
+c4               49.960               98.089               87.137
+c5               49.960               98.089               87.137
+   intracls_centroid.c5 intercls_centroid.c1 intercls_centroid.c2
+c1               92.628                0.000              857.273
+c2               92.628              857.273                0.000
+c3               92.628              321.445              537.244
+c4               92.628              531.489              629.877
+c5               92.628              618.483              348.215
+   intercls_centroid.c3 intercls_centroid.c4 intercls_centroid.c5
+c1              321.445              531.489              618.483
+c2              537.244              629.877              348.215
+c3                0.000              413.177              350.159
+c4              413.177                0.000              281.869
+c5              350.159              281.869                0.000
+   cluster_size cluster_center.1 cluster_center.2 cluster_center.3
+c1           46          78.5870           0.6087           6.6087
+c2          132          71.9394           0.5606           3.6515
+c3           23          78.0870           0.5652           5.7391
+c4          163          72.2086           0.5767           5.1411
+c5           61          74.8852           0.5902           4.4754
+   cluster_center.4 cluster_center.5 cluster_center.6 cluster_center.7
+c1         116.7391          43.0786          46.3746         138.6957
+c2         124.6439          65.0966          44.2546         139.5909
+c3         125.7391          44.8967          42.6113         139.5652
+c4         125.6902          56.3790          46.3261         138.6074
+c5         122.2951          57.0192          49.5956         139.8197
+   cluster_center.8 cluster_center.9 cluster_center.10
+c1          39.6957           0.5435            0.4783
+c2          24.2879           0.3030            0.2879
+c3          32.7826           0.6087            0.3043
+c4          29.8834           0.4110            0.4601
+c5          29.3443           0.5738            0.3443
+   cluster_center.11 cluster_center.12 cluster_center.13
+c1            0.8913          182.7174            1.0000
+c2            0.6742          726.7727            0.0379
+c3            0.6957          369.3478            1.0000
+c4            0.6994          712.8528            0.1104
+c5            0.7049          715.1967            0.1148
+   cluster_center.14 cluster_center.15
+c1           53.2174            0.8478
+c2          715.0909            0.1515
+c3          314.6522            0.6957
+c4           85.4601            1.0000
+c5          367.2623            1.0000
+
+$metrics_hc_ave
+   intracls_average.c1 intracls_average.c2 intracls_average.c3
+c1             196.326             168.117              67.920
+c2             196.326             168.117              67.920
+c3             196.326             168.117              67.920
+c4             196.326             168.117              67.920
+   intracls_average.c4 intracls_centroid.c1 intracls_centroid.c2
+c1             140.092              142.030              122.608
+c2             140.092              142.030              122.608
+c3             140.092              142.030              122.608
+c4             140.092              142.030              122.608
+   intracls_centroid.c3 intracls_centroid.c4 intercls_centroid.c1
+c1               47.277               98.089                0.000
+c2               47.277               98.089              542.370
+c3               47.277               98.089              552.081
+c4               47.277               98.089              374.734
+   intercls_centroid.c2 intercls_centroid.c3 intercls_centroid.c4
+c1              542.370              552.081              374.734
+c2                0.000              859.874              321.445
+c3              859.874                0.000              539.821
+c4              321.445              539.821                0.000
+   cluster_size cluster_center.1 cluster_center.2 cluster_center.3
+c1          226          73.0265           0.5752           4.9248
+c2           46          78.5870           0.6087           6.6087
+c3          130          71.7692           0.5692           3.6923
+c4           23          78.0870           0.5652           5.7391
+   cluster_center.4 cluster_center.5 cluster_center.6 cluster_center.7
+c1         124.7367          56.4527          47.1817         138.9204
+c2         116.7391          43.0786          46.3746         138.6957
+c3         124.6923          65.4030          44.2694         139.6308
+c4         125.7391          44.8967          42.6113         139.5652
+   cluster_center.8 cluster_center.9 cluster_center.10
+c1          29.6372           0.4558            0.4248
+c2          39.6957           0.5435            0.4783
+c3          24.3769           0.3000            0.2923
+c4          32.7826           0.6087            0.3043
+   cluster_center.11 cluster_center.12 cluster_center.13
+c1            0.7035          712.9336            0.1150
+c2            0.8913          182.7174            1.0000
+c3            0.6692          727.9462            0.0308
+c4            0.6957          369.3478            1.0000
+   cluster_center.14 cluster_center.15
+c1          165.7168            0.9956
+c2           53.2174            0.8478
+c3          717.4846            0.1462
+c4          314.6522            0.6957
+
+$metrics_hc_comp
+   intracls_average.c1 intracls_average.c2 intracls_average.c3
+c1             128.766             168.117             183.614
+c2             128.766             168.117             183.614
+c3             128.766             168.117             183.614
+c4             128.766             168.117             183.614
+   intracls_average.c4 intracls_centroid.c1 intracls_centroid.c2
+c1             140.092               91.833              122.608
+c2             140.092               91.833              122.608
+c3             140.092               91.833              122.608
+c4             140.092               91.833              122.608
+   intracls_centroid.c3 intracls_centroid.c4 intercls_centroid.c1
+c1              145.408               98.089                0.000
+c2              145.408               98.089              532.088
+c3              145.408               98.089              528.785
+c4              145.408               98.089              408.532
+   intercls_centroid.c2 intercls_centroid.c3 intercls_centroid.c4
+c1              532.088              528.785              408.532
+c2                0.000              785.770              321.445
+c3              785.770                0.000              469.829
+c4              321.445              469.829                0.000
+   cluster_size cluster_center.1 cluster_center.2 cluster_center.3
+c1          172          72.3547           0.5698           5.0872
+c2           46          78.5870           0.6087           6.6087
+c3          184          72.7663           0.5761           3.9022
+c4           23          78.0870           0.5652           5.7391
+   cluster_center.4 cluster_center.5 cluster_center.6 cluster_center.7
+c1         125.1366          56.3891          46.7133         138.6570
+c2         116.7391          43.0786          46.3746         138.6957
+c3         124.3315          62.8357          45.5620         139.6685
+c4         125.7391          44.8967          42.6113         139.5652
+   cluster_center.8 cluster_center.9 cluster_center.10
+c1          29.9128           0.4070            0.4593
+c2          39.6957           0.5435            0.4783
+c3          25.6630           0.3913            0.2989
+c4          32.7826           0.6087            0.3043
+   cluster_center.11 cluster_center.12 cluster_center.13
+c1            0.6977          712.8779            0.1105
+c2            0.8913          182.7174            1.0000
+c3            0.6848          723.5924            0.0598
+c4            0.6957          369.3478            1.0000
+   cluster_center.14 cluster_center.15
+c1           93.9884            1.0000
+c2           53.2174            0.8478
+c3          622.6033            0.3913
+c4          314.6522            0.6957
+
+$metrics_hc_sing
+   intracls_average.c1 intracls_average.c2 intracls_average.c3
+c1             414.967               0.000               0.000
+c2             414.967               0.000               0.000
+c3             414.967               0.000               0.000
+c4             414.967               0.000               0.000
+   intracls_average.c4 intracls_centroid.c1 intracls_centroid.c2
+c1              86.119              317.496                0.000
+c2              86.119              317.496                0.000
+c3              86.119              317.496                0.000
+c4              86.119              317.496                0.000
+   intracls_centroid.c3 intracls_centroid.c4 intercls_centroid.c1
+c1                0.000               49.794                0.000
+c2                0.000               49.794              551.329
+c3                0.000               49.794              138.947
+c4                0.000               49.794              207.538
+   intercls_centroid.c2 intercls_centroid.c3 intercls_centroid.c4
+c1              551.329              138.947              207.538
+c2                0.000              420.137              577.468
+c3              420.137                0.000              219.210
+c4              577.468              219.210                0.000
+   cluster_size cluster_center.1 cluster_center.2 cluster_center.3
+c1          420           73.500            0.576            4.755
+c2            1           68.000            1.000            6.000
+c3            1           76.000            0.000            6.000
+c4            3           77.000            0.667            6.667
+   cluster_center.4 cluster_center.5 cluster_center.6 cluster_center.7
+c1          124.120           57.455           46.090          139.155
+c2           78.000           31.564           21.000          131.000
+c3          109.000           24.224           46.500          142.000
+c4          115.000           29.349           35.417          140.000
+   cluster_center.8 cluster_center.9 cluster_center.10
+c1           28.917            0.421             0.383
+c2          119.000            0.000             1.000
+c3           38.000            1.000             1.000
+c4           48.333            1.000             0.000
+   cluster_center.11 cluster_center.12 cluster_center.13
+c1             0.712           643.598             0.224
+c2             1.000           138.000             1.000
+c3             0.000           512.000             1.000
+c4             1.000           565.000             1.000
+   cluster_center.14 cluster_center.15
+c1           329.552             0.705
+c2           138.000             0.000
+c3           306.000             1.000
+c4           518.000             0.667
+
+$metrics_dbscan_smal
+   intracls_average.c1 intracls_average.c2 intracls_average.c3
+c1             144.781              53.858              54.639
+c2             144.781              53.858              54.639
+c3             144.781              53.858              54.639
+   intracls_centroid.c1 intracls_centroid.c2 intracls_centroid.c3
+c1              105.099               37.963               34.998
+c2              105.099               37.963               34.998
+c3              105.099               37.963               34.998
+   intercls_centroid.c1 intercls_centroid.c2 intercls_centroid.c3
+c1                0.000              598.129              525.445
+c2              598.129                0.000               79.245
+c3              525.445               79.245                0.000
+   cluster_size cluster_center.1 cluster_center.2 cluster_center.3
+c1          178         71.87640          0.60112          4.66854
+c2          113         71.16814          0.57522          3.49558
+c3            6         82.16667          0.66667          4.00000
+   cluster_center.4 cluster_center.5 cluster_center.6 cluster_center.7
+c1        124.96348         57.65448         47.08834        138.80899
+c2        124.55752         64.83381         43.83222        139.76991
+c3        150.00000         67.34989         53.92778        137.50000
+   cluster_center.8 cluster_center.9 cluster_center.10
+c1         29.08427          0.41573           0.42697
+c2         23.69027          0.30088           0.27434
+c3         24.00000          0.33333           0.50000
+   cluster_center.11 cluster_center.12 cluster_center.13
+c1           0.68539         729.83146           0.00562
+c2           0.66372         730.00000           0.00000
+c3           0.66667         730.00000           0.00000
+   cluster_center.14 cluster_center.15
+c1         129.74719           1.00000
+c2         727.79646           0.06195
+c3         654.33333           1.00000
+
+$metrics_dbscan_med
+   intracls_average.c1 intracls_average.c2 intracls_average.c3
+c1             182.156              62.475              67.040
+c2             182.156              62.475              67.040
+c3             182.156              62.475              67.040
+   intracls_centroid.c1 intracls_centroid.c2 intracls_centroid.c3
+c1              133.203               43.559               45.273
+c2              133.203               43.559               45.273
+c3              133.203               43.559               45.273
+   intercls_centroid.c1 intercls_centroid.c2 intercls_centroid.c3
+c1                0.000              556.385              690.205
+c2              556.385                0.000              973.050
+c3              690.205              973.050                0.000
+   cluster_size cluster_center.1 cluster_center.2 cluster_center.3
+c1          203          72.4828           0.5813           4.6305
+c2          125          71.8320           0.5840           3.5680
+c3           12          81.1667           0.5000           7.5000
+   cluster_center.4 cluster_center.5 cluster_center.6 cluster_center.7
+c1         124.8596          57.3896          47.2643         138.9113
+c2         125.6000          65.7802          44.5949         139.6400
+c3         113.7500          44.2442          50.1458         138.2500
+   cluster_center.8 cluster_center.9 cluster_center.10
+c1          29.0542           0.4483            0.4335
+c2          24.1040           0.2960            0.2880
+c3          34.5833           0.4167            0.3333
+   cluster_center.11 cluster_center.12 cluster_center.13
+c1            0.7044          729.1724            0.0197
+c2            0.6560          729.6240            0.0080
+c3            1.0000           54.4167            1.0000
+   cluster_center.14 cluster_center.15
+c1          165.0936            1.0000
+c2          721.3840            0.1280
+c3           21.3333            0.7500
+
+$metrics_dbscan_big
+   intracls_average.c1 intracls_average.c2 intracls_average.c3
+c1             185.278              64.218              71.473
+c2             185.278              64.218              71.473
+c3             185.278              64.218              71.473
+   intracls_centroid.c1 intracls_centroid.c2 intracls_centroid.c3
+c1              135.483               44.711               48.302
+c2              135.483               44.711               48.302
+c3              135.483               44.711               48.302
+   intercls_centroid.c1 intercls_centroid.c2 intercls_centroid.c3
+c1                0.000              552.433              690.877
+c2              552.433                0.000              970.449
+c3              690.877              970.449                0.000
+   cluster_size cluster_center.1 cluster_center.2 cluster_center.3
+c1          208          72.2067           0.5817           4.7019
+c2          127          71.7480           0.5748           3.7008
+c3           14          82.7143           0.5714           7.6429
+   cluster_center.4 cluster_center.5 cluster_center.6 cluster_center.7
+c1         125.2139          57.1544          47.0608         138.9327
+c2         124.9764          65.4662          44.7876         139.6457
+c3         111.1429          44.3787          49.6964         138.6429
+   cluster_center.8 cluster_center.9 cluster_center.10
+c1          28.9856           0.4567            0.4279
+c2          24.3386           0.2913            0.2913
+c3          36.3571           0.4286            0.2857
+   cluster_center.11 cluster_center.12 cluster_center.13
+c1            0.7019          728.3558            0.0288
+c2            0.6614          728.4882            0.0236
+c3            1.0000           53.0000            1.0000
+   cluster_center.14 cluster_center.15
+c1          168.0337            1.0000
+c2          720.3780            0.1260
+c3           24.2857            0.7143
+

@@ -52,3 +52,5 @@ write.csv(labels, file="Sepsis+labels.csv")
 
 # Add name for saving!! This is the DBI evaluation csv print
 write.csv(indexes, file="Sepsis_DBI.csv")  
+
+describe_clustering_result(highest_DBI_result,5)

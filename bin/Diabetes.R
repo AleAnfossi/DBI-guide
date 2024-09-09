@@ -49,9 +49,10 @@ print(extracted_info)
 # Close the connection
 sink()
 
-
 # Add name for saving!! This is the data csv print
 write.csv(labels, file="Diabetes_type1+labels.csv")   
 
 # Add name for saving!! This is the DBI evaluation csv print
 write.csv(indexes, file="Diabetes_type1_DBI.csv")  
+
+describe_clustering_result(highest_DBI_result,1)

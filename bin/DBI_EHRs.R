@@ -17,7 +17,7 @@ DBI_EHRs<-function(data,km_labels,hc_labels,dbsc_lab )
 
   # Combine results into a data frame
   DBI_EHR <- data.frame (kmeans2=kmeans2,kmeans3=kmeans3,kmeans5=kmeans5,
-                         c_ave=hc_ave,hc_comp=hc_comp,hc_sing=hc_sing,
+                         hc_ave=hc_ave,hc_comp=hc_comp,hc_sing=hc_sing,
                          dbscan_smal=dbscan_smal,dbscan_med=dbscan_med,dbscan_big=dbscan_big
                          )
   return(DBI_EHR)

@@ -57,6 +57,8 @@ write.csv(labels, file="Depression_Heart_Failure+labels.csv")
 # Add name for saving!! This is the DBI evaluation csv print
 write.csv(indexes, file="Depression_Heart_Failure_DBI.csv") 
 
+describe_clustering_result(highest_DBI_result,3)
+
 
  
 
