@@ -1,5 +1,8 @@
+#Setting seed at
+set.seed(723)
+
 # Number of dimensions
-dim <- 200      # <------
+dim <- 50      # <------
 # Number of vectors
 n <- 50        # <------
 num <- 2 * n
@@ -57,7 +60,7 @@ for (i in 1:num) {
   }
   
   # kmeans and DBI execution at each step
-  kmeans_result <- kmeans(data, centers = 2, iter.max =50+i )
+  kmeans_result <- kmeans(data, centers = 2, iter.max =50+2*i )
   db_indices <- data.frame(t(DBI(data, kmeans_result$cluster)))
   
   # Store results
@@ -161,15 +164,43 @@ plot4 <- ggplot(results, aes(x = Step, y = Norm_DB_Index_Centroid)) +
   ylab("DBI") +
   theme_grey()
 
+file_name_plot <- paste(num, "_Vectors_",dim,"_Dimensions_Matrix_plot_percentages.pdf",sep=" ")
+# Open the PDF device
+pdf(file_name_plot)
+
+# plot cluster percentages
+plot_cluster_percentages_matrix(kmeans_store)
+
+# Close the PDF device to finalize the file
+dev.off()
+
+file_name_plot <- paste(num, "_Vectors_",dim,"_Dimensions_Matrix_plot_DBI.pdf",sep=" ")
+# Open the PDF device
+pdf(file_name_plot)
+
 # Arrange the plots together
 grid.arrange(plot1, plot2, plot3, plot4, ncol = 2)
 
-# Save on csv all the results
-file_name_dbi <- paste0(num, "_Vectors_", dim, "Dimensions_Matrix_DBI.csv")
-write.csv(results, file = file_name_dbi)
-file_name_data <- paste0(num, "_Vectors_", dim, "Dimensions_Matrix_data.csv")
-write.csv(data_store, file = file_name_data)
-file_name_kmeans <- paste0(num, "_Vectors_", dim, "Dimensions_Matrix_kmeans.csv")
-write.csv(kmeans_store, file = file_name_kmeans)
-file_name_metrics <- paste0(num, "_Vectors_", dim, "Dimensions_Matrix_metrics.csv")
-write.csv(metrics_store, file = file_name_metrics)
+# Close the PDF device to finalize the file
+dev.off()
+
+#Save on txt all the results
+file_name_data <-paste0(num, "_Vectors_",dim,"_Dimensions_Matrix_data.txt")
+# Open a connection to a text file
+sink(file_name_data)
+# Print Data
+print(data_store)
+# Print the labels
+print(kmeans_store)
+# Print metrics
+print(metrics_store)
+# Close the connection
+sink()
+
+file_name_results <- paste0(num, "_Vectors_",dim,"_Dimensions_Matrix_results.txt")
+# Open a connection to a text file
+sink(file_name_results)
+# Print Results
+print(results)
+# Close the connection
+sink()

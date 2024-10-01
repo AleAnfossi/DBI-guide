@@ -2,7 +2,10 @@
 #returns the dataframe 
 
 SingCloud<-function(number)
-{
+{ 
+  #Setting seed at 739
+  set.seed(739)
+  
   # Parameters for the single cluster
   mean <- c(4, 4)
   cov <- matrix(c(1, 0.5, 0.5, 1), nrow = 2)

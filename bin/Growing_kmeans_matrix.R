@@ -6,8 +6,10 @@
 #Arrows point where to modify at each change
 #In this version k_means changes number of centers as the changes grow
 
+#Setting seed at 196 for reproducibility
+set.seed(196)
 
-#Number of dimensions
+#Number of dimensions, experimented with dim=10,20,40,100
 dim<-20      #<------
 #Number of vectors
 num<-2*dim
@@ -145,15 +147,21 @@ plot4 <- ggplot(results, aes(x = Step, y = Norm_DB_Index_Centroid)) +
   ylab("DBI") +
   theme_grey()
 
+
+file_name_plot <- paste("Growing_kmeans_plot",dim,"_DBI.pdf",sep=" ")
+# Open the PDF device
+pdf(file_name_plot)
+
 # Arrange the plots together
 grid.arrange(plot1, plot2, plot3, plot4, ncol = 2)
 
+# Close the PDF device to finalize the file
+dev.off()
+
 #Save on txt all the results
-file_name <- paste0(dim, "Growing_kmeans_Matrix.txt")
+file_name_data <- paste0(dim, "Growing_kmeans_data.txt")
 # Open a connection to a text file
-sink(file_name)
-# Print Results
-print(results)
+sink(file_name_data)
 # Print Data
 print(data_store)
 # Print the labels
@@ -162,3 +170,57 @@ print(kmeans_store)
 print(metrics_store)
 # Close the connection
 sink()
+
+file_name_results <- paste0(dim, "Growing_kmeans_results.txt")
+# Open a connection to a text file
+sink(file_name_results)
+# Print Results
+print(results)
+# Close the connection
+sink()
+
+
+# Function to calculate cluster percentages
+calculate_percentages <- function(cluster_assignments) {
+  cluster_sizes <- table(cluster_assignments)
+  cluster_percentages <- (cluster_sizes / sum(cluster_sizes)) * 100
+  return(cluster_percentages)
+}
+
+# Initialize a data frame to store cluster percentages over steps
+cluster_percentages_store <- data.frame(Step = numeric(), Cluster = factor(), Percentage = numeric())
+
+# Loop over each step in kmeans_store and calculate cluster percentages
+unique_steps <- unique(kmeans_store$Step)
+for (i in unique_steps) {
+  # Subset kmeans_store for the current step
+  step_data <- kmeans_store[kmeans_store$Step == i, ]
+  
+  # Calculate the cluster percentages
+  cluster_percentages <- calculate_percentages(step_data$Cluster)
+  
+  # Store the percentages for each cluster
+  for (cluster in names(cluster_percentages)) {
+    cluster_percentages_store <- rbind(cluster_percentages_store, data.frame(
+      Step = i,
+      Cluster = as.factor(cluster),
+      Percentage = cluster_percentages[cluster] / 100  # Store as fraction for correct scaling
+    ))
+  }
+}
+
+# Plot the cluster percentages over steps in a bar plot
+cluster_percentage_plot <- ggplot(cluster_percentages_store, aes(x = as.factor(Step), y = Percentage, fill = Cluster)) +
+  geom_bar(stat = "identity", position = "stack") +  # Stacked bars
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1), limits = c(0, 1)) +  # 0 to 100% scale (stored as fractions)
+  ggtitle("Cluster Percentages over Steps") +
+  xlab("Step") +
+  ylab("Percentage of Each Cluster") +
+  theme_minimal() +
+  scale_fill_hue()
+
+# Save this plot to PDF along with the others
+file_name_percentage_plot <- paste("Growing_kmeans_plot",dim,"_percentages.pdf",sep=" ")
+pdf(file_name_percentage_plot)
+print(cluster_percentage_plot)
+dev.off()

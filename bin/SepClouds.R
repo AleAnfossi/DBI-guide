@@ -4,6 +4,9 @@
 
 SepClouds<-function(number)
 { 
+    #Setting seed at 834
+    set.seed(834)
+  
     # Parameters for cluster 1
     mean1 <- c(2, 2)
     cov1 <- matrix(c(1, 0.5, 0.5, 1), nrow = 2)

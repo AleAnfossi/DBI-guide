@@ -2,12 +2,14 @@
 #and N zero N-dimensional vectors representing the data points
 #get modifyed 2N-times alternating to ones and zeros, with a random
 #N-dimensional vector between zero and one.
-#At each step a clustering with kmeans and the DBI evaluation
+#At each step a clustering with kmeans with 2 centers and the DBI evaluation
 #Arrows point where to modify at each change
 
+#Setting seed at 420 for reproducibility
+set.seed(420)
 
 #Number of dimensions
-dim<-100      #<------
+dim<-50      #<------
 #Number of vectors
 num<-2*dim
 
@@ -144,18 +146,42 @@ plot4 <- ggplot(results, aes(x = Step, y = Norm_DB_Index_Centroid)) +
   ylab("DBI") +
   theme_grey()
 
+file_name_plot <- paste("Basic_kmeans_matrix_plot_DBI",dim,".pdf",sep=" ")
+# Open the PDF device
+pdf(file_name_plot)
+
 # Arrange the plots together
 grid.arrange(plot1, plot2, plot3, plot4, ncol = 2)
 
-#Save on csv all the results
-file_name_dbi <- paste0(dim, "Matrix_DBI.csv")
-write.csv(results, file=file_name_dbi)
-file_name_data <- paste0(dim, "Matrix_data.csv")
-write.csv(data_store, file=file_name_data)
-file_name_kmeans <- paste0(dim, "Matrix_kmeans.csv")
-write.csv(kmeans_store, file=file_name_kmeans)
-file_name_metrics <- paste0(dim, "Matrix_metrics.csv")
-write.csv(metrics_store, file=file_name_metrics)
+# Close the PDF device to finalize the file
+dev.off()
 
+file_name_plot <- paste("Basic_kmeans_matrix_plot_Percentages",dim,".pdf",sep=" ")
+# Open the PDF device
+pdf(file_name_plot)
 
+plot_cluster_percentages_matrix(kmeans_store)
 
+# Close the PDF device to finalize the file
+dev.off()
+
+#Save on txt all the results
+file_name_data <- paste0(dim, "Basic_kmeans_matrix_data.txt")
+# Open a connection to a text file
+sink(file_name_data)
+# Print Data
+print(data_store)
+# Print the labels
+print(kmeans_store)
+# Print metrics
+print(metrics_store)
+# Close the connection
+sink()
+
+file_name_results <- paste0(dim, "Basic_kmeans_matrix_results.txt")
+# Open a connection to a text file
+sink(file_name_results)
+# Print Results
+print(results)
+# Close the connection
+sink()

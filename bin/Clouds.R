@@ -2,16 +2,16 @@
 #DBI evaluation and plotting
 #Saving data in the data folder 
 #Saving results in results folder
-#The arrows indicate where to do each change before an execution
+#Arrows point to points where one wants to change settings
 
+#Cardinality of each initial cluster
+#Experiment was set with number=10,100,1000,10000
+number<-10000    #<-------------------
 
-#Cardinality of each initial cluster 
-number<-100   #<------------
-
-#Dataset creation single cloud of 2*number
-mydata<-SingCloud(number)[, 1:2]
+#Dataset creation single cloud of 2*number   #<-------------------
+#mydata<-SingCloud(number)[, 1:2]
 #Dataset creation seperate clouds of number
-#mydata<-SepClouds(number)[, 1:2]
+mydata<-SepClouds(number)[, 1:2]
 
 #Executing kmeans clustering
 kmeans_result <- kmeans(mydata, centers = 2, iter.max=20, nstart = 25)
@@ -22,11 +22,24 @@ mydata$kmeans_cluster <- factor(kmeans_result$cluster)
 #Calculate the four indexes
 indexes<-DBI(mydata[,1:2],mydata[,3])
 
-#Add name for saving!! This is the data csv print
-write.csv(mydata, file="10000sep_data.csv")  #<------------
 
-#Add name for saving!! This is the DBI evaluation csv print
-write.csv(indexes, file="10000sep_DBI.csv") #<-----------
+
+#Add name for saving!! This is the data csv print  #<-------------------
+#file_namedata <- paste(number,"sing_data", ".csv", sep = "")
+file_namedata <- paste(number,"sep_data", ".csv", sep = "")
+write.csv(mydata, file=file_namedata)  
+
+#Add name for saving!! This is the DBI evaluation csv print   #<-------------------
+#file_nameDBI <- paste(number,"sing_DBI", ".csv", sep = "")
+file_nameDBI <- paste(number,"sep_DBI", ".csv", sep = "")
+write.csv(indexes, file=file_nameDBI)  
+
+
+# Set the PDF output path   #<-------------------
+#file_name_plot <- paste(number,"_sing_plot", ".pdf", sep = "")
+file_name_plot <- paste(number,"_sep_plot", ".pdf", sep = "")
+
+pdf(file=file_name_plot)
 
 # Plot the kmeans clusters
 ggplot(mydata, aes(x = x, y = y, color = kmeans_cluster)) +
@@ -35,3 +48,6 @@ ggplot(mydata, aes(x = x, y = y, color = kmeans_cluster)) +
   labs(title = "K-Means Clustering",
        x = "Dimension 1",
        y = "Dimension 2")
+
+# Close the PDF device
+dev.off()
