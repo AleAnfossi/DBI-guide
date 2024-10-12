@@ -33,3 +33,4 @@ dbscan_labels<-function(data,eps,minPts,case)
   dbscan_labels<-data.frame(dbscan_smal,dbscan_med,dbscan_big)
   return (dbscan_labels)
 }
+

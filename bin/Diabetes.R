@@ -31,11 +31,38 @@ highest_DBI_result <- find_highest_DBI(indexes)
 #Calculate cardinality of clusters
 cardinality_proportions <- calculate_cardinality_proportion(mydata,km_labels,hc_labels,dbsc_lab)
 
-#Plot the result
+#Print and plot the result
+filename_percentages<-paste0("Diabetes_cluster_percentages_Plot.pdf")
+pdf(filename_percentages)
 plot_cluster_percentages(cardinality_proportions)
+dev.off()
 #Compare clusterings in a chart
 compare_clusterings(labels)
 
+#Print the DBI results
+# Convert the first four rows into a format suitable for plotting
+rows_to_plot <- indexes[1:4, ]  # Extract the first four rows
+column_names <- colnames(indexes)  # Get the column names (from kmeans2 onwards)
+
+# Get the actual row names from the data frame
+row_names <- rownames(indexes)[1:4]
+
+# Create a data frame for plotting, using the row names for the legend
+plot_data <- data.frame(
+  Configuration = rep(column_names, times = 4),
+  Value = c(as.numeric(indexes[1, ]), as.numeric(indexes[2, ]),
+            as.numeric(indexes[3, ]), as.numeric(indexes[4, ])),
+  Line = rep(row_names, each = length(column_names))  # Use row names for the legend
+)
+filename_dbi_plot<-paste0("Diabetes_DBI_Plot.pdf")
+pdf(filename_dbi_plot)
+# Create the plot, using color to distinguish the lines and row names in the legend
+ggplot(plot_data, aes(x = Configuration, y = Value, color = Line)) +
+  geom_point() +
+  labs(x = "Clustering algorithm", y = "DBI result", title = "Davies-Bouldin Index Evaluations", color="DBI Configuration") +
+  theme_grey()+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels by 45 degrees
+dev.off()
 #Exctract information DBI uses
 extracted_info <- extract_clustering_info(mydata, labels)
 # Open a connection to a text file
