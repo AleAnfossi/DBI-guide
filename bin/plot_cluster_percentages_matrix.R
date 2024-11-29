@@ -34,15 +34,24 @@ plot_cluster_percentages_matrix <- function(kmeans_store) {
   
   # Plot the cluster percentages over steps
   ggplot(cluster_percentages_melted, aes(x = Step, y = value / 100, fill = variable)) + 
-    geom_bar(stat = "identity") +  # Stacked bars by default
+    geom_bar(stat = "identity", position = "dodge") +  # Stacked bars by default
     scale_y_continuous(labels = scales::percent_format(accuracy = 1), limits = c(0, 1)) +  # 0 to 1 for fractions
     ggtitle("Cluster Percentages over Steps") + 
-    xlab("Step") + 
+    xlab("Manipulated rows") + 
     ylab("Cluster Percentage") + 
-    theme_minimal() + 
-    scale_fill_manual(values = c("Cluster1" = "blue", "Cluster2" = "red"), 
-                      labels = c("Cluster 1", "Cluster 2"))
-  
+    theme_grey() + 
+    scale_fill_manual(values = c("Cluster1" = "lightblue", "Cluster2" = "orange"), 
+                      labels = c("Cluster 1", "Cluster 2")) +  # Removed extra +
+    theme(
+      plot.title = element_text(size = 20),       # Title font size
+      axis.title.x = element_text(size = 16),     # X axis label font size
+      axis.title.y = element_text(size = 16),     # Y axis label font size
+      axis.text.x = element_text(size = 14),      # X axis tick labels font size
+      axis.text.y = element_text(size = 14),      # Y axis tick labels font size
+      legend.title = element_text(size = 16),     # Legend title font size
+      legend.text = element_text(size = 14),      # Legend text font size
+      legend.position = "bottom"                  # Move legend to the bottom
+    )
   
 }
 

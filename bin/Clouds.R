@@ -6,7 +6,7 @@
 
 #Cardinality of each initial cluster
 #Experiment was set with number=10,100,1000,10000
-number<-10000    #<-------------------
+number<-10    #<-------------------
 
 #Dataset creation single cloud of 2*number   #<-------------------
 #mydata<-SingCloud(number)[, 1:2]
@@ -41,13 +41,14 @@ file_name_plot <- paste(number,"_sep_plot", ".pdf", sep = "")
 
 pdf(file=file_name_plot)
 
-# Plot the kmeans clusters
+# Plot the kmeans clusters with the legend at the bottom
 ggplot(mydata, aes(x = x, y = y, color = kmeans_cluster)) +
   geom_point() +
   theme_grey() +
   labs(title = "K-Means Clustering",
        x = "Dimension 1",
-       y = "Dimension 2")
+       y = "Dimension 2") +
+  theme(legend.position = "bottom") # Move the legend to the bottom
 
 # Close the PDF device
 dev.off()

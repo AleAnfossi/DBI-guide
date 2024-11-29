@@ -43,27 +43,61 @@ compare_clusterings(labels)
 
 #Print the DBI results
 # Convert the first four rows into a format suitable for plotting
-rows_to_plot <- indexes[1:4, ]  # Extract the first four rows
-column_names <- colnames(indexes)  # Get the column names (from kmeans2 onwards)
+#rows_to_plot <- indexes[1:4, ]  # Extract the first four rows
+#column_names <- colnames(indexes)  # Get the column names (from kmeans2 onwards)
 
 # Get the actual row names from the data frame
-row_names <- rownames(indexes)[1:4]
+#row_names <- rownames(indexes)[1:4]
 
 # Create a data frame for plotting, using the row names for the legend
-plot_data <- data.frame(
-  Configuration = rep(column_names, times = 4),
-  Value = c(as.numeric(indexes[1, ]), as.numeric(indexes[2, ]),
-            as.numeric(indexes[3, ]), as.numeric(indexes[4, ])),
-  Line = rep(row_names, each = length(column_names))  # Use row names for the legend
-)
-filename_dbi_plot<-paste0("Cardiac_arrest_DBI_Plot.pdf")
-pdf(filename_dbi_plot)
+#plot_data <- data.frame(
+#  Configuration = rep(column_names, times = 4),
+#  Value = c(as.numeric(indexes[1, ]), as.numeric(indexes[2, ]),
+#            as.numeric(indexes[3, ]), as.numeric(indexes[4, ])),
+#  Line = rep(row_names, each = length(column_names))  # Use row names for the legend)
+#filename_dbi_plot<-paste0("Cardiac_arrest_DBI_Plot.pdf")
+#pdf(filename_dbi_plot)
 # Create the plot, using color to distinguish the lines and row names in the legend
-ggplot(plot_data, aes(x = Configuration, y = Value, color = Line)) +
-  geom_point() +
-  labs(x = "Clustering algorithm", y = "DBI result", title = "Davies-Bouldin Index Evaluations", color="DBI Configuration") +
-  theme_grey()+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels by 45 degrees
+#ggplot(plot_data, aes(x = Configuration, y = Value, color = Line)) +
+#  geom_point() +
+#  labs(x = "Clustering algorithm", y = "DBI result", title = "Davies-Bouldin Index Evaluations", color="DBI Configuration") +
+#  theme_grey()+
+#  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels by 45 degrees
+#dev.off()
+
+# Print the DBI results for the second row
+# Convert only the second row into a format suitable for plotting
+rows_to_plot <- indexes[2, , drop = FALSE]  # Extract only the second row
+column_names <- colnames(indexes)  # Get the column names (from kmeans2 onwards)
+
+# Get the actual row name for the second row
+row_name <- rownames(indexes)[2]
+
+# Create a data frame for plotting, using the row name for the legend
+plot_data <- data.frame(
+  Configuration = column_names,  # Use the column names as x-axis labels
+  Value = as.numeric(indexes[2, ]),  # Use the second row for the values
+  Line = rep(row_name, length(column_names))  # Use the second row's name for the legend
+)
+
+# Specify the filename for the PDF output
+filename_dbi_plot <- paste0("Cardiac_arrest_DBI_Plot.pdf")
+pdf(filename_dbi_plot)
+
+# Create the plot
+ggplot(plot_data, aes(x = Configuration, y = Value)) +
+  geom_bar(stat = "identity") +#geom_point()
+  labs(x = "Clustering algorithm", y = "DBI result", title = "Davies-Bouldin Index Evaluations", color = "DBI Configuration") +
+  theme_grey() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 14),  # Rotate x-axis labels by 45 degrees and set font size
+    plot.title = element_text(size = 20),       # Title font size
+    axis.title.x = element_text(size = 16),     # X axis label font size
+    axis.title.y = element_text(size = 16),     # Y axis label font size
+    axis.text.y = element_text(size = 14),      # Y axis tick labels font size
+    legend.title = element_text(size = 16),     # Legend title font size
+    legend.text = element_text(size = 14)       # Legend text font size
+  )
 dev.off()
 
 #Exctract information DBI uses

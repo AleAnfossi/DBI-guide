@@ -9,7 +9,7 @@
 set.seed(420)
 
 #Number of dimensions
-dim<-50      #<------
+dim<-5      #<------
 #Number of vectors
 num<-2*dim
 
@@ -106,55 +106,81 @@ results$DB_Index_Centroid <- as.numeric(results$DB_Index_Centroid)
 results$Norm_DB_Index_Avg <- as.numeric(results$Norm_DB_Index_Avg)
 results$Norm_DB_Index_Centroid <- as.numeric(results$Norm_DB_Index_Centroid)
 
-# Create the individual plots
-plot1 <- ggplot(results, aes(x = Step, y = DB_Index_Avg)) +
-  geom_line() +
-  geom_point() +
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 5), labels = scales::number_format(accuracy = 0.5)) +
-  ggtitle("DB Index Average over Steps") +
-  xlab("Step") +
-  ylab("DBI") +
-  theme_grey()
+# # Create the individual plots
+# plot1 <- ggplot(results, aes(x = Step, y = DB_Index_Avg)) +
+#   geom_line() +
+#   geom_point() +
+#   scale_y_continuous(breaks = scales::pretty_breaks(n = 5), labels = scales::number_format(accuracy = 0.5)) +
+#   ggtitle("DB Index Average over Steps") +
+#   xlab("Step") +
+#   ylab("DBI") +
+#   theme_grey()
+# 
+# # Plot for DB_Index_Centroid
+# plot2 <- ggplot(results, aes(x = Step, y = DB_Index_Centroid)) +
+#   geom_line() +
+#   geom_point() +
+#   scale_y_continuous(breaks = scales::pretty_breaks(n = 5), labels = scales::number_format(accuracy = 0.5)) +
+#   ggtitle("DB Index Centroid over Steps") +
+#   xlab("Step") +
+#   ylab("DBI") +
+#   theme_grey()
+# 
+# # Plot for Norm_DB_Index_Avg
+# plot3 <- ggplot(results, aes(x = Step, y = Norm_DB_Index_Avg)) +
+#   geom_line() +
+#   geom_point() +
+#   scale_y_continuous(breaks = scales::pretty_breaks(n = 5), labels = scales::number_format(accuracy = 0.5)) +
+#   ggtitle("Normalized DB Index Average over Steps") +
+#   xlab("Step") +
+#   ylab("DBI") +
+#   theme_grey()
+# 
+# # Plot for Norm_DB_Index_Centroid
+# plot4 <- ggplot(results, aes(x = Step, y = Norm_DB_Index_Centroid)) +
+#   geom_line() +
+#   geom_point() +
+#   scale_y_continuous(breaks = scales::pretty_breaks(n = 5), labels = scales::number_format(accuracy = 0.5)) +
+#   ggtitle("Normalized DB Index Centroid over Steps") +
+#   xlab("Step") +
+#   ylab("DBI") +
+#   theme_grey()
+# 
+# file_name_plot <- paste("Basic_kmeans_matrix_plot_DBI",dim,".pdf",sep=" ")
+# # Open the PDF device
+# pdf(file_name_plot)
+# 
+# # Arrange the plots together
+# grid.arrange(plot1, plot2, plot3, plot4, ncol = 2)
+# 
+# # Close the PDF device to finalize the file
+# dev.off()
 
-# Plot for DB_Index_Centroid
-plot2 <- ggplot(results, aes(x = Step, y = DB_Index_Centroid)) +
-  geom_line() +
-  geom_point() +
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 5), labels = scales::number_format(accuracy = 0.5)) +
-  ggtitle("DB Index Centroid over Steps") +
-  xlab("Step") +
-  ylab("DBI") +
-  theme_grey()
 
-# Plot for Norm_DB_Index_Avg
-plot3 <- ggplot(results, aes(x = Step, y = Norm_DB_Index_Avg)) +
-  geom_line() +
-  geom_point() +
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 5), labels = scales::number_format(accuracy = 0.5)) +
-  ggtitle("Normalized DB Index Average over Steps") +
-  xlab("Step") +
-  ylab("DBI") +
-  theme_grey()
+  file_name_plot <- paste("Basic_kmeans_matrix_plot_DBI",dim,".pdf",sep=" ")
+  # Open the PDF device
+  pdf(file_name_plot)
 
-# Plot for Norm_DB_Index_Centroid
-plot4 <- ggplot(results, aes(x = Step, y = Norm_DB_Index_Centroid)) +
-  geom_line() +
-  geom_point() +
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 5), labels = scales::number_format(accuracy = 0.5)) +
-  ggtitle("Normalized DB Index Centroid over Steps") +
-  xlab("Step") +
-  ylab("DBI") +
-  theme_grey()
+  ggplot(results, aes(x = Step, y = DB_Index_Centroid)) +
+    geom_line() +
+    geom_point() +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 5), labels = scales::number_format(accuracy = 0.5)) +
+    ggtitle("DB Index Centroid over Steps") +
+    xlab("Manipulated rows") +
+    ylab("DBI") +
+    theme_grey()+
+    theme(
+      plot.title = element_text(size = 20),       # Title font size
+      axis.title.x = element_text(size = 16),     # X axis label font size
+      axis.title.y = element_text(size = 16),     # Y axis label font size
+      axis.text.x = element_text(size = 14),      # X axis tick labels font size
+      axis.text.y = element_text(size = 14),      # Y axis tick labels font size
+      legend.title = element_text(size = 16),     # Legend title font size
+      legend.text = element_text(size = 14)       # Legend text font size
+    )
 
-file_name_plot <- paste("Basic_kmeans_matrix_plot_DBI",dim,".pdf",sep=" ")
-# Open the PDF device
-pdf(file_name_plot)
-
-# Arrange the plots together
-grid.arrange(plot1, plot2, plot3, plot4, ncol = 2)
-
-# Close the PDF device to finalize the file
-dev.off()
+  # Close the PDF device to finalize the file
+  dev.off()
 
 file_name_plot <- paste("Basic_kmeans_matrix_plot_Percentages",dim,".pdf",sep=" ")
 # Open the PDF device
