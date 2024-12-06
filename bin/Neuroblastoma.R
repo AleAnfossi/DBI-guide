@@ -79,6 +79,9 @@ plot_data <- data.frame(
   Value = as.numeric(indexes[2, ]),  # Use the second row for the values
   Line = rep(row_name, length(column_names))  # Use the second row's name for the legend
 )
+plot_data <-reorder_plot_data(plot_data)#Ordering from the highest to the lowest
+# Reorder the 'Configuration' column as a factor based on the 'Value' column
+plot_data$Configuration <- factor(plot_data$Configuration, levels = plot_data$Configuration)
 
 # Specify the filename for the PDF output
 filename_dbi_plot <- paste0("Neuroblastoma_DBI_Plot.pdf")
