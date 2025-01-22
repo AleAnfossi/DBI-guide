@@ -1,32 +1,34 @@
 # Set seed for reproducibility
 set.seed(42)
 
-# Parameters for the two clusters
-n_cluster1 <- 300  # Number of points in the first cluster
-n_cluster2 <- 300  # Number of points in the second cluster
-mean1 <- c(2.5, 0)   # Centroid of the first cluster
-mean2 <- c(-2.5, 0)  # Centroid of the second cluster
-sd_x <- 3        # Increased standard deviation for the x-coordinates (more overlap)
-sd_y <- 1        # Small standard deviation for the y-coordinates (still near the line)
+# Parameters for the four clusters
+n_points <- 200                # Number of points per cluster
+means <- list(c(2, 0.5), c(-20, 0), c(2, -0.5), c(-5, -2))  # Centroids of the clusters
+sd <- 0.5                      # Standard deviation for all clusters
 
-# Generate points for the first cluster
-x_cluster1 <- rnorm(n_cluster1, mean = mean1[1], sd = sd_x)
-y_cluster1 <- rnorm(n_cluster1, mean = mean1[2], sd = sd_y)
+# Generate points for each cluster
+x1 <- rnorm(n_points, mean = means[[1]][1], sd = sd)
+y1 <- rnorm(n_points, mean = means[[1]][2], sd = sd)
 
-# Generate points for the second cluster
-x_cluster2 <- rnorm(n_cluster2, mean = mean2[1], sd = sd_x)
-y_cluster2 <- rnorm(n_cluster2, mean = mean2[2], sd = sd_y)
+x2 <- rnorm(n_points, mean = means[[2]][1], sd = sd)
+y2 <- rnorm(n_points, mean = means[[2]][2], sd = sd)
 
-# Combine the two clusters into a data frame
+x3 <- rnorm(n_points, mean = means[[3]][1], sd = sd)
+y3 <- rnorm(n_points, mean = means[[3]][2], sd = sd)
+
+x4 <- rnorm(n_points, mean = means[[4]][1], sd = sd)
+y4 <- rnorm(n_points, mean = means[[4]][2], sd = sd)
+
+# Combine the four clusters into a data frame
+# Assign the extreme left ball (Cluster 2) to Cluster 3, while the new middle ball stays in Cluster 2
 data <- data.frame(
-  x = c(x_cluster1, x_cluster2),
-  y = c(y_cluster1, y_cluster2),
-  cluster = factor(c(rep("Cluster 1", n_cluster1), rep("Cluster 2", n_cluster2)))
+  x = c(x1, x2, x3, x4),
+  y = c(y1, y2, y3, y4),
+  cluster = factor(c(rep("Cluster 1", n_points), 
+                     rep("Cluster 3", n_points),  # Move extreme left ball to Cluster 3
+                     rep("Cluster 3", n_points),  # Keep original Cluster 3
+                     rep("Cluster 2", n_points)))  # Keep new middle ball in Cluster 2
 )
-
-
-
-
 
 DBIndexes <- function(data, clusters) {
   
@@ -46,7 +48,8 @@ DBIndexes <- function(data, clusters) {
   # Return as a named data frame
   return(db_index_avg)
 }
-# Apply the DBI function
+
+# Apply the DBIndexes function
 result <- DBIndexes(data[, 1:2], data$cluster)
 
 # Prepare results for display
@@ -57,7 +60,7 @@ plot <- ggplot(data, aes(x = x, y = y, color = cluster)) +
   geom_point(alpha = 0.7) +
   theme_minimal(base_family = "Arial") +
   theme(panel.background = element_rect(fill = "grey", color = NA)) +
-  labs(title = "Two Highly Mixed Clusters on a Line",
+  labs(title = "Clusters with Adjusted Assignments",
        x = "X-coordinate",
        y = "Y-coordinate",
        color = "Cluster") +
