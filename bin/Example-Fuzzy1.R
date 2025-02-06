@@ -51,7 +51,7 @@ result_text <- paste("Davies-Bouldin Index:", result)
 plot <- ggplot(data, aes(x = x, y = y, color = cluster)) +
   geom_point(alpha = 0.7) +
   theme_minimal(base_family = "Arial") +
-  theme(panel.background = element_rect(fill = "grey", color = NA)) +
+  theme_grey()+
   labs(title = "Two Highly Mixed Clusters",
        x = "X-coordinate",
        y = "Y-coordinate",
